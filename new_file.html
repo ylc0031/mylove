@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>点击播放视频</title>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<style type="text/css">
+	   body{background-color: #0964}
+	  .videolist { position:relative; float:left; width:540px; height:300px;margin-left: 230px;}
+	  .videolist:hover{ cursor: pointer; }
+	  .videoed { width:50px; height:50px; position: absolute; left:45%; top:40%; z-index:99; border-radius:100%; }
+	  .videos{ display:none; border: 1px solid #080808; position:fixed; left:50%; top:50%; margin-left:-320px; margin-top:-210px; z-index:100; width:640px; height:360px; }
+	  .vclose { position:absolute;right:1%; top:1%; border-radius:100%; cursor: pointer; }
+	  .con{height: 430px; width: 1000px;margin: 0 auto;}
+	  .masklayer{position: fixed;display: none;width: 100%;top: 0px;left: 0px;background-color: rgba(0, 0, 0, 0.8);z-index: 1000;-webkit-user-select: none;-ms-user-select: none;}
+	</style>
+	</head> 
+	<body>
+    <div class="video">
+      <div class="con" style="margin-top: 100px">
+        <div class="videolist" vpath="../img/圖片2.png" ipath="https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_CinematicTrailer.mp4">
+          <img src="../img/圖片2.png" width="540px" height="300px" /><!--背景图片-->
+          <img src="../img/播放Icon.png" class="videoed"/><!--播放按钮  -->
+        </div>
+        <div class="masklayer"><!--遮罩层-->
+          <div class="videos"></div><!--存放视频-->
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery-2.1.1.min.js"></script>
+	<script>
+        $('.videolist').each(function(){ //遍历视频列表
+            $(this).click(function(){ //视频被点击后执行
+                var img = $(this).attr('vpath');//获取视频预览图
+                var video = $(this).attr('ipath');//获取视频路径
+                 $('.videos').html("<video id=\"video\" poster='"+img+"' style='width: 640px' src='"+video+"' preload=\"auto\" controls=\"controls\" autoplay=\"autoplay\"></video><img onClick=\"close1()\" class=\"vclose\" src=\"../img/gb.png\" width=\"25\" height=\"25\"/>");
+                 $('.videos').show();//视频窗口弹出
+                 $('.masklayer').show(); //遮罩层弹出
+                 $('body').css('overflow', 'hidden'); //禁止滚动
+            });
+        });
+        function close1(){
+            var v = document.getElementById('video');//获取视频节点
+            $('.videos').hide();//点击关闭
+            $('.masklayer').hide();//遮罩层隐藏
+            v.pause();//停止
+            $('.videos').html();
+        }
+	</script>
+	</body>
+</html>
